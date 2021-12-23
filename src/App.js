@@ -1,23 +1,42 @@
-import logo from './logo.svg';
-import './App.css';
+import { useEffect, useState } from "react";
+import { api } from "./api";
+import "./App.css";
+import { UserCard } from "./components/user";
 
 function App() {
+  const [loading, setLoading] = useState(false);
+  const [userData, setUserData] = useState([]);
+  const [disabelBtn, setDisableBtn] = useState(false);
+  useEffect(() => {
+    setLoading(true);
+    api()
+      .get("/users")
+      .then((res) => {
+        setUserData(res.data.data);
+      })
+      .catch((err) => console.log(err))
+      .finally(() => setLoading(false));
+  }, []);
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <h1>Users</h1>
+      {loading && "...loading"}
+      {userData.length
+        ? userData.map(({ id, email, first_name, avatar }) => {
+            return (
+              <UserCard
+                key={id}
+                email={email}
+                name={first_name}
+                img={avatar}
+                id={id}
+                disabelBtn={disabelBtn}
+                handleDisable={setDisableBtn}
+              />
+            );
+          })
+        : "no data"}
     </div>
   );
 }

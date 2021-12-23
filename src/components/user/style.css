@@ -1,0 +1,32 @@
+.userCardWrapper {
+  width: 300px;
+  height: 150px;
+  border: 1px solid #000;
+  padding: 10px;
+}
+
+.userCard {
+  display: flex;
+  justify-content: space-between;
+}
+
+.userCardImg {
+  width: 100px;
+  height: 100px;
+}
+
+.userCardBtn {
+  width: 100px;
+  height: 40px;
+  border: none;
+  outline: none;
+  background-color: tomato;
+  color: white;
+  font-size: 20px;
+  float: right;
+  cursor: pointer;
+}
+
+.userCardBtn:disabled {
+  background-color: #705b57;
+}
